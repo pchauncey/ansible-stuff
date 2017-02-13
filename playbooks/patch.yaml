@@ -1,0 +1,15 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+  - name: upgrade all packages with dnf
+    dnf:
+      name: '*'
+      state: latest
+    when: ansible_distribution == 'Fedora'
+
+  - name: upgrade all packages with apt after refreshing
+    apt: 
+      update_cache: yes
+      upgrade: dist
+    when: ansible_distribution == 'Debian' 
