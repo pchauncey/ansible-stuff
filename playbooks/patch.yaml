@@ -1,6 +1,6 @@
 ---
-- hosts: all
-  remote_user: root
+- name: patch various hosts
+  hosts: all
   tasks:
 
   - name: upgrade all packages with yum on RHEL
