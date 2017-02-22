@@ -2,13 +2,20 @@
 - hosts: all
   remote_user: root
   tasks:
-  - name: upgrade all packages with dnf
+
+  - name: upgrade all packages with yum on RHEL
+    yum:
+      name: '*'
+      state: latest
+    when: ansible_distribution == 'RedHat'
+
+  - name: upgrade all packages with dnf on Fedora
     dnf:
       name: '*'
       state: latest
     when: ansible_distribution == 'Fedora'
 
-  - name: upgrade all packages with apt after refreshing
+  - name: upgrade all packages with apt after refreshing on Debian
     apt: 
       update_cache: yes
       upgrade: dist
