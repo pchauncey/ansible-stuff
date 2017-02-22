@@ -1,5 +1,5 @@
 ---
-- name: patch various hosts
+- name: patch various Linux hosts with appropriate package manager
   hosts: all
   tasks:
 
