@@ -14,9 +14,4 @@
         instance_names: "{{ instance_names }}"
         machine_type: "{{ machine_type }}"
         image: "{{ image }}"
-        service_account_email: "{{ service_account_email }}"
-        project_id: "{{ project_id }}"
         metadata: '{ "diskSizeGb": "20" }'
-
-
-
