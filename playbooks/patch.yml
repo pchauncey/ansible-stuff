@@ -3,7 +3,7 @@
   hosts: all
   tasks:
 
-  - name: upgrade all packages with yum on RHEL
+  - name: upgrade all packages with yum on {{ ansible_distribution }}
     yum:
       name: '*'
       state: latest
