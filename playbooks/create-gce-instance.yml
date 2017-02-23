@@ -11,7 +11,7 @@
   tasks:
     - name: Launch instances
       gce:
-        instance_names: "{{ instance_name }}"
+        instance_names: "{{ instance_names }}"
         machine_type: "{{ machine_type }}"
         image: "{{ image }}"
         service_account_email: "{{ service_account_email }}"
