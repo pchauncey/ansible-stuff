@@ -7,7 +7,7 @@
     yum:
       name: '*'
       state: latest
-    when: ansible_distribution == 'RedHat'
+    when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
   - name: upgrade all packages with dnf on Fedora
     dnf:
