@@ -1,0 +1,23 @@
+- name: Create instances
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    project_id: splendid-planet-159614
+    machine_type: n1-standard-1
+    image: centos-7
+
+  tasks:
+    - name: Launch instances
+      gce:
+        instance_names: "{{ instance_name }}"
+        machine_type: "{{ machine_type }}"
+        image: "{{ image }}"
+        service_account_email: "{{ service_account_email }}"
+        credentials_file: "{{ credentials_file }}"
+        project_id: "{{ project_id }}"
+        metadata: '{ "diskSizeGb": "20" }'
+
+
+
