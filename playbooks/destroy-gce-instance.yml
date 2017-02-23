@@ -1,0 +1,17 @@
+- name: Create instances
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    machine_type: n1-standard-1
+    image: centos-7
+
+  tasks:
+    - name: Destroy instances
+      gce:
+        instance_names: "{{ instance_names }}"
+        state: absent
+
+
+
