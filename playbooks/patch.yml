@@ -3,20 +3,20 @@
   hosts: all
   tasks:
 
-  - name: upgrade all packages with yum on {{ ansible_distribution }}
+  - name: upgrade all packages with yum
     yum:
       name: '*'
       state: latest
     when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
-  - name: upgrade all packages with dnf on Fedora
+  - name: upgrade all packages with dnf
     dnf:
       name: '*'
       state: latest
     when: ansible_distribution == 'Fedora'
 
-  - name: upgrade all packages with apt after refreshing on Debian
+  - name: upgrade all packages with apt
     apt: 
       update_cache: yes
       upgrade: dist
-    when: ansible_distribution == 'Debian' 
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
