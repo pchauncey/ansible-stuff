@@ -1,0 +1,19 @@
+- name: reboot and wait for host to restart
+  hosts: all
+  tasks:
+
+  - name: reboot immediately
+    shell: sleep 2 && shutdown -r now "Ansible triggered reboot"
+    async: 1
+    poll: 0
+    ignore_errors: true
+
+  - name: wait for {{ inventory_hostname }} to come back
+    become: false
+    local_action: wait_for
+    args:
+      host: "{{ ansible_host }}"
+      port: 22
+      state: started
+      delay: 30
+      timeout: 300
