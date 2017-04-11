@@ -1,0 +1,48 @@
+---
+- name: start vms, patch them, stop them
+  hosts: all
+  serial: 1
+  gather_facts: no
+  tasks:
+
+  - name: start {{ inventory_hostname }} vm
+    virt:
+      name: "{{ inventory_hostname }}"
+      state: running
+    delegate_to: localhost
+
+  - name: wait for {{ inventory_hostname }} to start
+    local_action: wait_for
+    args:
+      host: "{{ ansible_host }}"
+      port: 22
+      state: started
+      delay: 20
+      timeout: 300
+
+  - name: gather facts
+    setup:
+      
+  - name: upgrade all packages with yum
+    yum:
+      name: '*'
+      state: latest
+    when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
+
+  - name: upgrade all packages with dnf
+    dnf:
+      name: '*'
+      state: latest
+    when: ansible_distribution == 'Fedora'
+
+  - name: upgrade all packages with apt
+    apt: 
+      update_cache: yes
+      upgrade: dist
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: stop {{ inventory_hostname }} vm
+    virt:
+      name: "{{ inventory_hostname }}"
+      state: shutdown
+    delegate_to: localhost
