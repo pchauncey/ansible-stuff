@@ -4,7 +4,6 @@
   gather_facts: no
 
   vars:
-    project_id: splendid-planet-159614
     machine_type: n1-standard-1
     image: centos-7
 
