@@ -1,0 +1,47 @@
+---
+- name: patch various Linux hosts with appropriate package manager
+  hosts: all
+  tasks:
+
+  - name: Patch Red Hat, CentOS, Amazon Linux
+    yum:
+      name: '*'
+      state: latest
+    when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS' or ansible_distribution == 'Amazon'
+
+  - name: Patch Fedora
+    dnf:
+      name: '*'
+      state: latest
+    when: ansible_distribution == 'Fedora'
+
+  - name: Patch Debian or Ubuntu
+    apt: 
+      update_cache: yes
+      upgrade: dist
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - block:
+    - name: Patch Windows
+      win_updates:
+        category_names:
+          - Application
+          - Connectors
+          - CriticalUpdates
+          - DefinitionUpdates
+          - DeveloperKits
+          - FeaturePacks
+          - Guidance
+          - SecurityUpdates
+          - ServicePacks
+          - Tools
+          - UpdateRollups
+        state: installed
+      register: update_result
+
+    - name: Reboot, if required
+      win_reboot:
+      when: update_result.reboot_required
+
+    when: ansible_os_family == 'Windows'
+
