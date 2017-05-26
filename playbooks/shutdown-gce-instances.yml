@@ -10,7 +10,7 @@
         state: stopped
       delegate_to: localhost
       register: record
-      when: "{{ hostvars[inventory_hostname].get('gce_status') }}" is RUNNING
+      when: "{{ hostvars[inventory_hostname].get('gce_status') }}" == "RUNNING"
 
     - name: debug
       debug:
