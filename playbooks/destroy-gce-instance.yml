@@ -8,6 +8,3 @@
       gce:
         instance_names: "{{ instance_names }}"
         state: deleted
-
-
-
