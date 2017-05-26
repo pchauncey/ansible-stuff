@@ -6,7 +6,7 @@
   tasks:
     - name: Shutdown {{ inventory_hostname }}
       gce:
-        instance_name: "{{ inventory_hostname }}"
+        instance_names: "{{ inventory_hostname }}"
         state: stopped
       delegate_to: localhost
       register: record
