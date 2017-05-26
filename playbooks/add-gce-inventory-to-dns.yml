@@ -17,4 +17,4 @@
     - name: debug
       debug:
         var: record
-        verbosity: 2
+        verbosity: 1
