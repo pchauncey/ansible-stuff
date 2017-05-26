@@ -4,11 +4,6 @@
   gather_facts: no
 
   tasks:
-    - name: debug
-      local_action: 
-        module: debug
-        var: ansible_ssh_hostname
-
     - name: Add DNS record for {{ inventory_hostname }}.{{ zone }} 
       local_action:
         module: gcdns_record
@@ -18,3 +13,10 @@
         value: "{{ hostvars[inventory_hostname].get('ansible_ssh_host') }}"
         overwrite: true
       delegate_to: localhost
+      register: record
+
+    - name: debug
+      local_action:
+        module: debug
+        var: record
+        verbosity: 2
