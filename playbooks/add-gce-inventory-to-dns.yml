@@ -5,8 +5,7 @@
 
   tasks:
     - name: Add DNS record for {{ inventory_hostname }}.{{ zone }} 
-      local_action:
-        module: gcdns_record
+      gcdns_record:
         record: "{{ inventory_hostname }}.{{ zone }}"
         zone: "{{ zone }}"
         type: A
@@ -16,7 +15,6 @@
       register: record
 
     - name: debug
-      local_action:
-        module: debug
+      debug:
         var: record
         verbosity: 2
