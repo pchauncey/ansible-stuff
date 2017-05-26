@@ -1,15 +1,17 @@
 - name: Add an Ansible Tower inventory to a Google Cloud DNS zone
-  hosts: localhost
+  hosts: all
   connection: local
   gather_facts: no
 
   tasks:
     - name: debug
-      debug:
+      local_action: 
+        module: debug
         var: ansible_ssh_hostname
 
     - name: Add DNS record for {{ inventory_hostname }}.{{ zone }} 
-      gcdns_record:
+      local_action:
+        module: gcdns_record
         record: "{{ inventory_hostname }}.{{ zone }}"
         zone: "{{ zone }}"
         type: A
