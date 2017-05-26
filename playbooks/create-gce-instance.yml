@@ -3,10 +3,6 @@
   connection: local
   gather_facts: no
 
-  vars:
-    machine_type: n1-standard-1
-    image: centos-7
-
   tasks:
     - name: Launch instances
       gce:
