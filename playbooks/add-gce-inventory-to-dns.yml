@@ -13,7 +13,7 @@
         overwrite: true
       when: hostvars[inventory_hostname].get('gce_status')  == "RUNNING"
       delegate_to: localhost
-      register: record
+      register: record_add
 
     - name: Remove DNS record for {{ inventory_hostname }}.{{ zone }}
       gcdns_record:
@@ -24,9 +24,11 @@
         overwrite: true
       when: hostvars[inventory_hostname].get('gce_status') != "RUNNING"
       delegate_to: localhost
-      register: record
+      register: record_remove
 
     - name: debug
       debug:
-        var: record
+        var:
+          - record_add
+          - record_remove
         verbosity: 1
