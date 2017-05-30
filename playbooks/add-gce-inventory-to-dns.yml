@@ -15,6 +15,18 @@
       delegate_to: localhost
       register: record
 
+    - name: Remove DNS record for {{ inventory_hostname }}.{{ zone }}
+      gcdns_record:
+        record: "{{ inventory_hostname }}.{{ zone }}"
+        zone: "{{ zone }}"
+        type: A
+        state: absent
+        overwrite: true
+      when: hostvars[inventory_hostname].get('gce_status') not "RUNNING"
+      delegate_to: localhost
+      register: record
+
+
     - name: debug
       debug:
         var: record
