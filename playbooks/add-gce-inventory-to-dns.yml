@@ -22,7 +22,7 @@
         type: A
         state: absent
         overwrite: true
-      when: hostvars[inventory_hostname].get('gce_status') not "RUNNING"
+      when: hostvars[inventory_hostname].get('gce_status') != "RUNNING"
       delegate_to: localhost
       register: record
 
