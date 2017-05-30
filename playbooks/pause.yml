@@ -4,4 +4,4 @@
   tasks:
 
     - pause:
-        seconds: "{{ seconds }}"
+        seconds: "{{ pause_seconds }}"
