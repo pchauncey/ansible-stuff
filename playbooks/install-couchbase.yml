@@ -1,0 +1,39 @@
+- name: install couchbase enterprise server
+  hosts: all
+  vars:
+    - package: couchbase-server
+    - package_source_url: https://packages.couchbase.com/releases/4.6.2/couchbase-server-enterprise-4.6.2-centos7.x86_64.rpm
+  tasks:
+
+    - name: check if couchbase is installed
+      command: rpm -q {{ package }}
+      ignore_errors: true
+      register: is_installed
+
+    # only install couchbase if it's not already installed
+    - block:
+      
+      - name: get couchbase md5 for rpm
+        uri:
+          url: "{{ package_source_url }}.md5"
+          return_content: true 
+        register: md5
+  
+      - name: get couchbase rpm package
+        get_url:
+          url: "{{ package_source_url }}"
+          dest: /tmp/couchbase.rpm
+          checksum: md5:{{ md5.content }}
+  
+      - name: install couchbase rpm package
+        yum:
+          name: /tmp/couchbase.rpm
+          state: installed
+  
+      - name: remove rpm
+        file:
+          dest: /tmp/couchbase.rpm
+          state: absent
+
+      when: is_installed.rc != 0
+
