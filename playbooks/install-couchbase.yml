@@ -7,7 +7,7 @@
   tasks:
 
     - name: check if couchbase is installed
-      command: rpm -q {{ package }}
+      command: rpm -q {{ package }}-{{ version }}
       ignore_errors: true
       register: is_installed
 
@@ -31,7 +31,7 @@
           name: /tmp/couchbase.rpm
           state: installed
   
-      - name: remove rpm
+      - name: cleanup rpm file
         file:
           dest: /tmp/couchbase.rpm
           state: absent
