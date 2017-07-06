@@ -1,8 +1,9 @@
 - name: install couchbase enterprise server
   hosts: all
   vars:
+    - version: 4.6.2
     - package: couchbase-server
-    - package_source_url: https://packages.couchbase.com/releases/4.6.2/couchbase-server-enterprise-4.6.2-centos7.x86_64.rpm
+    - package_source_url: https://packages.couchbase.com/releases/{{ version }}/{{ package }}-enterprise-{{ version }}-centos7.x86_64.rpm
   tasks:
 
     - name: check if couchbase is installed
